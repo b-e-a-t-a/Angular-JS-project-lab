@@ -21,6 +21,12 @@ function TodoController(TodoService) {
   this.removeTodo = function (item, index) {
     this.list.splice(index, 1);
   };
+
+  this.updateTodo = function (item, index) {
+    TodoService
+      .update(item);
+  };
+
   this.getRemaining = function () {
     return this.list.filter(function (item) {
       return !item.completed;
