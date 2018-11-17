@@ -15,7 +15,11 @@
       <!-- {{ todo.list }} -->
       <ul class="todo__list">
         <li ng-repeat="item in todo.list">
-          <input type="checkbox" id="todo-{{ $index }}" ng-model="item.completed">
+          <input
+            type="checkbox"
+            id="todo-{{ $index }}"
+            ng-model="item.completed"
+            ng-change="todo.toggleState(item);">
           <label class="toggle" for="todo-{{ $index }}"></label>
           <p ng-dblclick="showEditField = true;" ng-hide="showEditField">
             {{ item.title }}

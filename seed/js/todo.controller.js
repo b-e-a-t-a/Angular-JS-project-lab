@@ -48,6 +48,19 @@ function TodoController(TodoService) {
     });
   };
 
+
+  this.toggleState = function (item) {
+    TodoService
+      .update(item) //if we mark an item is complete with them want to updated saved on a server, so we can pass in an item
+      .then(function () {
+        //if we updated todo item everything works fine, we then do nothing
+      }, function () {
+        //if sth went wrong we want to set the state back to its original state
+        //eg. item.completed has been marked to true, we then want to set it back to false because sth went wrong on a server side
+        item.completed = !item.completed;
+      });
+  }
+
   getTodos(); //we need to call this in the runtime to bound it to the Controller Object
 }
 
