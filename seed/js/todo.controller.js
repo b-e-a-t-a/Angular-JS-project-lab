@@ -19,7 +19,13 @@ function TodoController(TodoService) {
     this.newTodo = ''; //once the item has been added we want to clear the todo
   };
   this.removeTodo = function (item, index) {
-    this.list.splice(index, 1);
+    TodoService
+      .remove(item)
+      .then(function (response) {
+        ctrl.list.splice(index, 1); //if the request was unsuccessful we dont want to remove it from the user point of view
+      //so they might think it is deleted even when it hasnt
+      //so we should only update the view when the response is successful
+      });
   };
 
   this.updateTodo = function (item, index) {

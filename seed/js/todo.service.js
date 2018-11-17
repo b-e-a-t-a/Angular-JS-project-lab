@@ -15,7 +15,11 @@ function TodoService($http) {
     });
   }
 
-  function remove() {}
+  function remove(todo) {
+    return $http.delete(prefix + API + todo.id).then(function (response) {
+      return response.data;
+    });
+  }
 
   return { //CRUD operations
     create: create,
