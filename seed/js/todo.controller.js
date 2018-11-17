@@ -1,15 +1,16 @@
-function TodoController() {
+function TodoController(TodoService) {
+  const ctrl = this;
   this.newTodo = '';
-  this.list = [{
-    title: 'First todo item!',
-    completed: true
-  },{
-    title: 'Second todo item!',
-    completed: false
-  },{
-    title: 'Third todo item!',
-    completed: false
-  }];
+  this.list = [];
+
+  function getTodos() { //in runtime we want to get all of our todos
+    TodoService
+      .retrieve()
+      .then(function (response) {
+        ctrl.list = response; //first 10 items from a todo API
+      });
+  }
+
   this.addTodo = function () {
     this.list.unshift({
       title: this.newTodo,
@@ -23,8 +24,10 @@ function TodoController() {
   this.getRemaining = function () {
     return this.list.filter(function (item) {
       return !item.completed;
-    })
-  }
+    });
+  };
+
+  getTodos(); //we need to call this in the runtime to bound it to the Controller Object
 }
 
 angular
