@@ -38,6 +38,11 @@ function TodoController(TodoService) {
   };
 
   this.updateTodo = function (item, index) {
+    if (!item.title) { //if the string is empty
+      // if (user removes the string after double clicking) we want to delete it, we dont want to send back empty todo list
+      this.removeTodo(item, index);//reusing the above this.removeTodo function inside updateTodo function
+      return; //we will return fromthis function, which means TodoService.update(item) will never gets called
+    }
     TodoService
       .update(item);
   };
