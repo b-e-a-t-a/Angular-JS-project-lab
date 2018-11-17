@@ -12,12 +12,21 @@ function TodoController(TodoService) {
   }
 
   this.addTodo = function () {
-    this.list.unshift({
-      title: this.newTodo,
-      completed: false
+    if (!this.newTodo) { //as a safety check, if no todo item (or empty string) we dont want to add it as an empty todo list
+      return;
+    }
+    TodoService
+      .create({
+        title: this.newTodo,
+        completed: false
+      })
+      .then(function (response) { //the response object will be newly created todo item
+        ctrl.list.unshift(response); //will give as a dynamic id from the server
+        ctrl.newTodo = ''; //initialize the new todo as an empty value again once it has been successfully added
+        //once the item has been added we want to clear the todo
     });
-    this.newTodo = ''; //once the item has been added we want to clear the todo
   };
+
   this.removeTodo = function (item, index) {
     TodoService
       .remove(item)

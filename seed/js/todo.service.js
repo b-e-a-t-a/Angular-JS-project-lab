@@ -2,7 +2,12 @@ function TodoService($http) {
   const prefix = 'https://cors-anywhere.herokuapp.com/';
   const API = '//jsonplaceholder.typicode.com/todos/';
 
-  function create() {}
+  function create(todo) {
+    return $http.post(prefix + API, todo).then(function (response) {
+      return response.data;
+    });
+  }
+
   function retrieve() {
     return $http.get(prefix + API).then(function (response) {
       return response.data.splice(0, 10); // to grab 1-10 items in array
